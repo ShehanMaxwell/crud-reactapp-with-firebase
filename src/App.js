@@ -6,8 +6,10 @@ import {
   getDocs,
   addDoc,
   updateDoc,
+  deleteDoc,
   doc,
 } from '@firebase/firestore';
+import { async } from '@firebase/util';
 
 function App() {
   const [newName, setNewName] = useState('');
@@ -17,13 +19,18 @@ function App() {
   const userCollectionRef = collection(db, 'users');
 
   const createUser = async () => {
-    await addDoc(userCollectionRef, { name: newName, age: newAge });
+    await addDoc(userCollectionRef, { name: newName, age: Number(newAge) });
   };
 
   const updateUser = async (id, age) => {
     const userDoc = doc(db, 'users', id);
     const newFields = { age: age + 1 };
     await updateDoc(userDoc, newFields);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, 'users', id);
+    await deleteDoc(userDoc);
   };
 
   useEffect(() => {
@@ -62,6 +69,14 @@ function App() {
               }}
             >
               Increase Age
+            </button>
+            <button
+              onClick={() => {
+                deleteUser(user.id);
+              }}
+            >
+              {' '}
+              Delete User{' '}
             </button>
           </div>
         );
