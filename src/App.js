@@ -58,6 +58,12 @@ function App() {
         }}
       />
       <button onClick={createUser}>Create User</button>
+      <div>
+        <h1 style={{ color: 'blue', fontStyle: 'italic' }}>
+          After each create/update/delete operations, Reload the webpage to see
+          changes!
+        </h1>
+      </div>
       {users.map((user) => {
         return (
           <div>
